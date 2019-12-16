@@ -1,0 +1,14 @@
+/*
+ *
+ * AdminCandidatesListActions constants
+ *
+ */
+
+export const ACCOUNTS_DELETE_REQUESTED = 'app/Data/ACCOUNTS_DELETE_REQUESTED';
+export const ACCOUNTS_DELETE_FAILED = 'app/Data/ACCOUNTS_DELETE_FAILED';
+export const ACCOUNTS_DELETE_SUCCEEDED = 'app/Data/ACCOUNTS_DELETE_SUCCEEDED';
+export const ACCOUNTS_DELETE = {
+  request: ACCOUNTS_DELETE_REQUESTED,
+  success: ACCOUNTS_DELETE_SUCCEEDED,
+  failure: ACCOUNTS_DELETE_FAILED,
+};
