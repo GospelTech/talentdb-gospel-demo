@@ -30,7 +30,7 @@ It's special because A.) You can share data with fine grained access-control as 
 # Installing NodeJS and NPM:
 
 For production you should make this a docker image, but for dev purposes it's nice to edit, save, run without any additional overhead. I'm using Ubuntu 18.04 so followed [this guide](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-18-04). Once you have the latest versions of node and npm, move on
-*  apt install -y nodejs npm nginx git
+*  apt install -y nodejs npm nginx git vim tmux
 * (This only gets you node v8.10.0 and npm 3.5.2 from Ubuntu so follow the tut above to get to Node v10.17.0 and npm 6.11.3
 *  curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh
 *  bash nodesource_setup.sh
@@ -38,8 +38,8 @@ For production you should make this a docker image, but for dev purposes it's ni
 
 Grab the code & set it up
 
-* git clone <this repo>
-* cd <this repo>
+* git clone _this repo_
+* cd _this repo_
 * npm install gospel-sdk-js-1.5.0-296.tgz
 
 You'll find the Gospel SDK is already there but for a newer version check the Downloads section of the Gospel Admin UI
