@@ -1,0 +1,147 @@
+##
+#
+server {
+	listen 80;
+	listen 443 ssl;
+        ssl_certificate /etc/letsencrypt/live/<APPNAME.YOURDOMAIN.COM>/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/<APPNAME.YOURDOMAIN.COM>/privkey.pem;
+        root /var/www/;
+        # Add index.php to the list if you are using PHP
+        # index index.html index.htm index.nginx-debian.html;
+        server_name <APPNAME.YOURDOMAIN.COM>;
+        gzip on;
+        gzip_disable "msie6";
+        gzip_vary on;
+        gzip_proxied any;
+        gzip_comp_level 6;
+        gzip_buffers 16 8k;
+        gzip_http_version 1.1;
+        gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript application/javascript text/html;
+
+#	location ^~ /talentdb3000/ {
+#	error_page 405 =200 $uri;
+#       try_files $uri $uri/ /index.html;
+#       proxy_pass http://localhost:3000/;	
+#	}
+
+#	The section below manages the serving of content from /var/www/app. Put the 'build' folder here
+	location ^~ /app/ {
+	    #proxy_pass http://localhost:3000/;
+            index  index.html;
+            try_files $uri $uri/ /index.html;
+            if ($request_method = 'OPTIONS') {
+                add_header 'Access-Control-Allow-Origin' 'https://$host';
+                add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, OPTIONS';
+                add_header 'Vary' 'Origin';
+                add_header "Content-Security-Policy" "default-src https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://chart.googleapis.com/ https://www.gstatic.com/charts/ https://fonts.googleapis.com; img-src 'self' data: https://chart.googleapis.com/; style-src 'self' 'unsafe-inline' https://www.gstatic.com/charts/ https://fonts.googleapis.com; connect-src 'self' data: wss://$host https://docs.gospel.tech; font-src 'self' data: 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://fonts.gstatic.com/";
+                add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization';
+                add_header 'Access-Control-Max-Age' 1728000;
+                add_header 'Content-Type' 'text/plain charset=UTF-8';
+                add_header 'Content-Length' 0;
+                return 204;
+            }
+            add_header 'Access-Control-Allow-Origin' 'https://$host';
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization';
+            add_header 'Access-Control-Expose-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization';
+            add_header 'Vary' 'Origin';
+            add_header "Content-Security-Policy" "default-src https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://chart.googleapis.com/ https://www.gstatic.com/charts/ https://fonts.googleapis.com; img-src 'self' data: https://chart.googleapis.com/; style-src 'self' 'unsafe-inline' https://www.gstatic.com/charts/ https://fonts.googleapis.com; connect-src 'self' data: wss://$host https://docs.gospel.tech; font-src 'self' data: 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://fonts.gstatic.com/";
+            #expires $expires;
+        }	
+
+        location ^~ /ws/ {
+            proxy_pass https://<GOSPEL-BACKEND-IP>/ws/;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_read_timeout 86400;
+        }
+        location ^~ /api/ {
+            proxy_pass https://<GOSPEL-BACKEND-IP>/api/;
+            proxy_hide_header 'Access-Control-Allow-Origin';
+            proxy_hide_header 'Content-Security-Policy';
+        }
+        location ^~ /ca/ {
+            proxy_pass https://<GOSPEL-BACKEND-IP>/ca/;
+            proxy_pass_request_headers on;
+            proxy_pass_request_body on;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_hide_header 'Access-Control-Allow-Origin';
+            proxy_hide_header 'Content-Security-Policy';
+            if ($request_method = 'OPTIONS') {
+                add_header 'Access-Control-Allow-Origin' 'https://$host';
+                add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, OPTIONS';
+                add_header 'Vary' 'Origin';
+                add_header "Content-Security-Policy" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+                add_header "X-Content-Security-Policy" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+                add_header "X-WebKit-CSP" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+                add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization,X509-signature,X509-certificate';
+                add_header 'Access-Control-Max-Age' 1728000;
+                add_header 'Content-Type' 'text/plain charset=UTF-8';
+                add_header 'Content-Length' 0;
+                return 204;
+            }
+            if ($request_method = 'POST') {
+                add_header 'Access-Control-Allow-Origin' 'https://$host';
+                add_header 'Access-Control-Allow-Origin' 'https://$host';
+                add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, OPTIONS';
+                add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization,X509-signature,X509-certificate';
+                add_header 'Access-Control-Expose-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization';
+                add_header 'Vary' 'Origin';
+                add_header "Content-Security-Policy" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+                add_header "X-Content-Security-Policy" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+                add_header "X-WebKit-CSP" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+            }
+            if ($request_method = 'GET') {
+                add_header 'Access-Control-Allow-Origin' 'https://$host';
+                add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, OPTIONS';
+                add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization,X509-signature,X509-certificate';
+                add_header 'Access-Control-Expose-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization';
+                add_header 'Vary' 'Origin';
+                add_header "Content-Security-Policy" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+                add_header "X-Content-Security-Policy" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+                add_header "X-WebKit-CSP" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+            }
+        }
+        location / {
+            # First attempt to serve request as file, then
+            # as directory, then fall back to displaying a 404.
+            error_page 405 =200 $uri;
+	    try_files $uri $uri/ /index.html;
+            #proxy_pass http://localhost:3000/;  (npm start creates a dev server on port 3000)
+	    proxy_pass https://<GOSPEL-BACKEND-IP>/;
+            if ($request_method = 'OPTIONS') {
+                add_header 'Access-Control-Allow-Origin' 'https://$host';
+                add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, OPTIONS';
+                add_header 'Vary' 'Origin';
+                add_header "Content-Security-Policy" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+                add_header "X-Content-Security-Policy" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+                add_header "X-WebKit-CSP" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+                add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization,X509-signature,X509-certificate';
+                add_header 'Access-Control-Max-Age' 1728000;
+                add_header 'Content-Type' 'text/plain charset=UTF-8';
+                add_header 'Content-Length' 0;
+                return 204;
+            }
+            if ($request_method = 'POST') {
+                add_header 'Access-Control-Allow-Origin' 'https://$host';
+                add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, OPTIONS';
+                add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization,X509-signature,X509-certificate';
+                add_header 'Access-Control-Expose-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization';
+                add_header 'Vary' 'Origin';
+                add_header "Content-Security-Policy" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+                add_header "X-Content-Security-Policy" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+                add_header "X-WebKit-CSP" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+            }
+            if ($request_method = 'GET') {
+                add_header 'Access-Control-Allow-Origin' 'https://$host';
+                add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, OPTIONS';
+                add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization,X509-signature,X509-certificate';
+                add_header 'Access-Control-Expose-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization';
+                add_header 'Vary' 'Origin';
+                add_header "Content-Security-Policy" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+                add_header "X-Content-Security-Policy" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+                add_header "X-WebKit-CSP" "default-src wss://$host https://$host; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://fonts.googleapis.com; img-src 'self' data: https://maps.gstatic.com https://maps.googleapis.com https://chart.googleapis.com; style-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; font-src 'self' data: 'unsafe-inline' https://at.alicdn.com https://fonts.googleapis.com https://fonts.gstatic.com/";
+            }
+        }
+    }
