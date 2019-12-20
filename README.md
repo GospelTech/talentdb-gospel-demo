@@ -58,9 +58,11 @@ $ npm run build
 ```
 
 * Copy the resulting build directory to /var/www/app
-* See the nginx config files to implement the reverse_proxy setup to host the app and send traffic to the back end
+* The Nginx config needs to be edited - check the video for guidance
 * Enable the site in nginx
 ```
+cp nginx-config/etc-nginx-sites-available-talentdb /etc/nginx/sites-available/talentdb
+vim /etc/nginx/sites-available/talentdb
 ln -s /etc/nginx/sites-available/talentdb /etc/nginx/sites-enabled/talentdb"
 ```
 
