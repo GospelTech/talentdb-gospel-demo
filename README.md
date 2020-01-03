@@ -77,5 +77,6 @@ ln -s /etc/nginx/sites-available/talentdb /etc/nginx/sites-enabled/talentdb
 * Use the accounts provided when the back-end completed. Start with account viewer1. See the video demo for more detail.
 
 # Now fly! 
-Now you can start playing around and see what is connected to what. Consider changing the app into a system for sensitive scanned documents for the NHS or a Financial assets/banking. Another option is an inter-insurnace-company customer detail exchange ("what do you know about customer bob@gmail.com") while giving control of the shared data to bob@gmail.com. 
+Now you can start playing around and see what is connected to what. Consider changing the app into a system for sensitive scanned documents for the NHS or a Financial assets/Banking. Another option is an inter-insurace-company customer detail exchange/fraud checking system ("Here's what I know about customer key:bob@gmail.com") while giving control of the shared data to bob@gmail.com.
+
 Let me know if you need any help on gus@gospel.tech or join our [Comunity Slack Channel](https://join.slack.com/t/gospeltechcommunity/shared_invite/enQtNzM0Nzk1NDI3MTg5LTMwZmY1NTJlOTJlMzU5MDI3NzlhY2MzOWQwNDFhYmE4ODlmYmJiOWJhYmZlNGE4ZjBjYmU0ZjQwYmVkMmIyMTg)
