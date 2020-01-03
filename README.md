@@ -21,9 +21,9 @@ It's special because you can share data with fine grained access-control as stru
 * Log into your new Gospel Data Platform demo in GKE
 * You now have a Gospel Developer Quickstart demo "backend"
 
-# Frontend
+# Frontend (fe)
 * Make a virtual machine
-* Add it's public IP to DNS
+* Add it's public IP to DNS (e.g sharesupersecretstuff.app)
 * Installed the relevant tools you'll need
 * Get an SSL cert with certbot
 ```
@@ -63,7 +63,7 @@ $ npm run build
 ```
 cp nginx-config/etc-nginx-sites-available-talentdb /etc/nginx/sites-available/talentdb
 vim /etc/nginx/sites-available/talentdb
-ln -s /etc/nginx/sites-available/talentdb /etc/nginx/sites-enabled/talentdb"
+ln -s /etc/nginx/sites-available/talentdb /etc/nginx/sites-enabled/talentdb
 ```
 
 # Next steps include
@@ -73,9 +73,9 @@ ln -s /etc/nginx/sites-available/talentdb /etc/nginx/sites-enabled/talentdb"
 * use "kubectl -n gospel delete pod/xxxxx" to delete the pods signer-xxxxx and 3x backend-xxxx. 
 
 # Hit it!
-* Hitting my talentdb.gus.io for me, shows the index.html file of the build directory on the VM. It also proxy-passes me to the Gospel back-end for login and auth, and the CA changes means it's sends me back to the front-end to continue using the app. 
-* Forgive me but my site is likely offline now as I kill the backend and vms when not testing/demoing this to people to save cost....
-* Use the accounts provided when the back-end completed. Start with account viewer1
+* Hitting my frontend vm, shows the index.html file of the build directory. It also proxy-passes you to the Gospel back-end for login and auth, and the CA changes you've made means you get sent back to the front-end vm and can continue using the app without interruption. 
+* Use the accounts provided when the back-end completed. Start with account viewer1. See the video demo for more detail.
 
-# Right! 
-Now you can start playing around and see what is connected to what. Next perhaps try changing the app into a system for sensitive scanned documents for the NHS or a Financial assets/banking. Let me know if you need any help!
+# Now fly! 
+Now you can start playing around and see what is connected to what. Consider changing the app into a system for sensitive scanned documents for the NHS or a Financial assets/banking. Another option is an inter-insurnace-company customer detail exchange ("what do you know about customer bob@gmail.com") while giving control of the shared data to bob@gmail.com. 
+Let me know if you need any help on gus@gospel.tech or join our [Comunity Slack Channel](https://join.slack.com/t/gospeltechcommunity/shared_invite/enQtNzM0Nzk1NDI3MTg5LTMwZmY1NTJlOTJlMzU5MDI3NzlhY2MzOWQwNDFhYmE4ODlmYmJiOWJhYmZlNGE4ZjBjYmU0ZjQwYmVkMmIyMTg)
