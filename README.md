@@ -7,9 +7,12 @@ It's special because you can share data with fine grained access-control as stru
 * In case you want some help, you're welcome to watch the 26 minute [video tutorial](https://storage.googleapis.com/talentdb-gospel-demo/Gospel%20Devrel%20Video2%20-%20Building%20your%20own%20talentdb.mp4) as I build a mini LinkedIn using this repo as a guide.
 
 # Prerequisites
-* Approx. 1 hour 
+* Approx. 1 hour
 * Google Cloud account
 * Your own domain and rights to add DNS records (You can try using IPs but chrome gets unhappy and everything fails)
+
+# Architecture diagram
+![](diagram.png)
 
 # Build a Gospel backend
 * Using a new google cloud account I start with $300 free with which to test this software
@@ -21,7 +24,7 @@ It's special because you can share data with fine grained access-control as stru
 * Log into your new Gospel Data Platform demo in GKE
 * You now have a Gospel Developer Quickstart demo "backend"
 
-# Frontend (fe)
+# Frontend
 * Make a virtual machine
 * Add it's public IP to DNS (e.g sharesupersecretstuff.app)
 * Installed the relevant tools you'll need
