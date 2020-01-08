@@ -7,7 +7,7 @@ It's special because you can share data with fine grained access-control as stru
 * In case you want some help, you're welcome to watch the 26 minute [video tutorial](https://storage.googleapis.com/talentdb-gospel-demo/Gospel%20Devrel%20Video2%20-%20Building%20your%20own%20talentdb.mp4) as I build a mini LinkedIn using this repo as a guide.
 
 # Prerequisites
-* Approx. 1 hour
+* Approx. 1 hour 
 * Google Cloud account
 * Your own domain and rights to add DNS records (You can try using IPs but chrome gets unhappy and everything fails)
 
@@ -26,7 +26,7 @@ It's special because you can share data with fine grained access-control as stru
 
 # Frontend
 * Make a virtual machine
-* Add it's public IP to DNS (e.g sharesupersecretstuff.app)
+* Add it's public IP to DNS
 * Installed the relevant tools you'll need
 * Get an SSL cert with certbot
 ```
