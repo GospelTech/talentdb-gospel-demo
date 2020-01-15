@@ -4,7 +4,7 @@ Gospel is an inter-business datastore built on a blockchain/DLT and it provides 
 It's special because you can share data with fine grained access-control as structured data, a graph of relationships or blobs (e.g. PDF, photos) without needing to copy it between orgs. And you get immutable read-receipts, detail of which person or account read a row or column of a table, or accessed a file. Any attempt to view or read data leaves a trace n 3 Hyperledger Fabric blockchain peers. This means you can see all access - you can verify after trusting data into a shared state - and then control it/stop sharing since you hold the ability to stop the sharing from happening. It's a system ready for GDPR compliant medical data and fintech apps to build on.
 
 # Video Tutorial
-* In case you want some help, you're welcome to watch the 26 minute [video tutorial](https://storage.googleapis.com/talentdb-gospel-demo/Gospel%20Devrel%20Video2%20-%20Building%20your%20own%20talentdb.mp4) as I build a mini LinkedIn using this repo as a guide.
+* In case you want some help, you're welcome to watch the 26 minute [video tutorial](https://www.youtube.com/watch?v=nwVhHMW_xAY) as I build a mini LinkedIn using this repo as a guide.
 
 # Prerequisites
 * Approx. 1 hour 
