@@ -79,7 +79,7 @@
     "connected-react-router": "6.4.0",
     "cross-env": "5.2.0",
     "date-fns": "^2.0.0-beta.5",
-    "express": "4.16.4",
+    "express": "4.19.2",
     "final-form": "^4.18.5",
     "fontfaceobserver": "2.1.0",
     "history": "4.9.0",
